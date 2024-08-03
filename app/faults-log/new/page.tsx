@@ -1,20 +1,27 @@
 "use client";
-import { Button, Callout, TextField } from "@radix-ui/themes";
+import { Button, Callout, Text, TextField } from "@radix-ui/themes";
 import React, { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createFaultSchema } from "@/app/createFaultSchema";
+import { z } from "zod";
 
-interface FaultForm {
-  title: string;
-  description: string;
-}
+type FaultForm = z.infer<typeof createFaultSchema>;
 
 const NewFaultPage = () => {
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<FaultForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FaultForm>({
+    resolver: zodResolver(createFaultSchema),
+  });
   const [error, setError] = useState("");
 
   return (
@@ -40,6 +47,11 @@ const NewFaultPage = () => {
           placeholder="Title"
           {...register("title")}
         ></TextField.Root>
+        {errors.title && (
+          <Text color="violet" as="p">
+            {errors.title.message}
+          </Text>
+        )}
         <Controller
           name="description"
           control={control}
@@ -47,7 +59,11 @@ const NewFaultPage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-
+        {errors.description && (
+          <Text color="violet" as="p">
+            {errors.description.message}
+          </Text>
+        )}
         <Button>Submit New Fault</Button>
       </form>
     </div>
