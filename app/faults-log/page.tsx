@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import prisma from "@/prisma/client";
+import FaultStatusBadge from "../componenets/FaultStatusBadge";
 const FaultsLog = async () => {
   const faults = await prisma.faults.findMany();
   return (
@@ -28,10 +29,12 @@ const FaultsLog = async () => {
             <Table.Row key={fault.id}>
               <Table.Cell>
                 {fault.title}
-                <div className="block md:hidden">{fault.status}</div>
+                <div className="block md:hidden">
+                  <FaultStatusBadge status={fault.status} />
+                </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {fault.status}
+                <FaultStatusBadge status={fault.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {fault.createdAt.toDateString()}

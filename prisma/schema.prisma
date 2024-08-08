@@ -22,5 +22,5 @@ model Faults {
 enum Status {
   NEW
   ACTIVE
-  CLOSED
+  RESOLVED
 }
