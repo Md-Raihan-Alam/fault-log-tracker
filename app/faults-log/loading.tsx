@@ -1,13 +1,12 @@
 import React from "react";
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
-import prisma from "@/prisma/client";
 import FaultStatusBadge from "../componenets/FaultStatusBadge";
-import delay from "delay";
+import { Table } from "@radix-ui/themes";
+import prisma from "@/prisma/client";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import FaultActions from "./FaultActions";
-const FaultsLog = async () => {
+const LoadingFaultsPage = async () => {
   const faults = await prisma.faults.findMany();
-  await delay(2000);
   return (
     <div>
       <FaultActions />
@@ -27,16 +26,20 @@ const FaultsLog = async () => {
           {faults.map((fault) => (
             <Table.Row key={fault.id}>
               <Table.Cell>
-                {fault.title}
+                {/* {fault.title} */}
+                <Skeleton />
                 <div className="block md:hidden">
-                  <FaultStatusBadge status={fault.status} />
+                  {/* <FaultStatusBadge status={fault.status} /> */}
+                  <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <FaultStatusBadge status={fault.status} />
+                {/* <FaultStatusBadge status={fault.status} /> */}
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {fault.createdAt.toDateString()}
+                {/* {fault.createdAt.toDateString()} */}
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -46,4 +49,4 @@ const FaultsLog = async () => {
   );
 };
 
-export default FaultsLog;
+export default LoadingFaultsPage;
