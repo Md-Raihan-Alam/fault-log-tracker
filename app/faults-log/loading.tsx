@@ -1,5 +1,4 @@
 import React from "react";
-import FaultStatusBadge from "../componenets/FaultStatusBadge";
 import { Table } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
 import Skeleton from "react-loading-skeleton";
@@ -26,19 +25,15 @@ const LoadingFaultsPage = async () => {
           {faults.map((fault) => (
             <Table.Row key={fault.id}>
               <Table.Cell>
-                {/* {fault.title} */}
                 <Skeleton />
                 <div className="block md:hidden">
-                  {/* <FaultStatusBadge status={fault.status} /> */}
                   <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {/* <FaultStatusBadge status={fault.status} /> */}
                 <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {/* {fault.createdAt.toDateString()} */}
                 <Skeleton />
               </Table.Cell>
             </Table.Row>

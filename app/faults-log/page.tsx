@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
+import { Table } from "@radix-ui/themes";
+import Link from "../componenets/Link";
 import prisma from "@/prisma/client";
 import FaultStatusBadge from "../componenets/FaultStatusBadge";
 import delay from "delay";
@@ -27,7 +27,8 @@ const FaultsLog = async () => {
           {faults.map((fault) => (
             <Table.Row key={fault.id}>
               <Table.Cell>
-                {fault.title}
+                <Link href={`/faults-log/${fault.id}`}>{fault.title}</Link>
+
                 <div className="block md:hidden">
                   <FaultStatusBadge status={fault.status} />
                 </div>
