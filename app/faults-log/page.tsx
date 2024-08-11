@@ -1,13 +1,10 @@
 import React from "react";
 import { Table } from "@radix-ui/themes";
-import Link from "../componenets/Link";
+import { FaultStatusBadge, Link } from "@/app/componenets";
 import prisma from "@/prisma/client";
-import FaultStatusBadge from "../componenets/FaultStatusBadge";
-import delay from "delay";
 import FaultActions from "./FaultActions";
 const FaultsLog = async () => {
   const faults = await prisma.faults.findMany();
-  await delay(2000);
   return (
     <div>
       <FaultActions />

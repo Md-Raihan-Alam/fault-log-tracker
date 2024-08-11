@@ -1,8 +1,7 @@
 import React from "react";
 import { Table } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "@/app/componenets";
 import FaultActions from "./FaultActions";
 const LoadingFaultsPage = async () => {
   const faults = await prisma.faults.findMany();
