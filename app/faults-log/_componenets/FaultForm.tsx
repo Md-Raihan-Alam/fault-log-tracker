@@ -7,16 +7,13 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFaultSchema } from "@/app/createFaultSchema";
+import { faultSchema } from "@/app/createFaultSchema";
 import { z } from "zod";
 import ErrorMessage from "@/app/componenets/ErrorMessage";
 import { Faults } from "@prisma/client";
+import SimpleMDE from "react-simplemde-editor";
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
-
-type FaultFormData = z.infer<typeof createFaultSchema>;
+type FaultFormData = z.infer<typeof faultSchema>;
 
 const FaultForm = ({ fault }: { fault?: Faults }) => {
   const router = useRouter();
@@ -26,15 +23,17 @@ const FaultForm = ({ fault }: { fault?: Faults }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<FaultFormData>({
-    resolver: zodResolver(createFaultSchema),
+    resolver: zodResolver(faultSchema),
   });
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      await axios.post("/api/faults", data);
+      if (fault) await axios.patch("/api/faults/" + fault.id, data);
+      else await axios.post("/api/faults", data);
       router.push("/faults-log");
+      router.refresh();
     } catch (error) {
       setSubmitting(false);
       console.log(error);
@@ -69,7 +68,7 @@ const FaultForm = ({ fault }: { fault?: Faults }) => {
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button disabled={isSubmitting}>
-          Submit New Fault
+          {fault ? "Update Fault " : "Submit New Fault "}
           {isSubmitting && <Spinner />}
         </Button>
       </form>

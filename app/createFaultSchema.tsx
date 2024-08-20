@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const createFaultSchema = z.object({
+export const faultSchema = z.object({
   title: z
     .string()
     .min(5, "Title is required to be at least 5 characters")
