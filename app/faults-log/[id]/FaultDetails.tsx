@@ -12,7 +12,7 @@ const FaultDetails = ({ fault }: { fault: Faults }) => {
         <FaultStatusBadge status={fault.status} />
         <Text>{fault.createdAt.toDateString()}</Text>
       </Flex>
-      <Card className="prose" mt="4">
+      <Card className="prose max-w-full" mt="4">
         <ReactMarkdown>{fault.description}</ReactMarkdown>
       </Card>
     </>

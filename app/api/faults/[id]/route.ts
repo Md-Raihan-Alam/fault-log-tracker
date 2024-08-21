@@ -35,3 +35,29 @@ export async function PATCH(
   });
   return NextResponse.json(updateFault);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: {
+      id: string;
+    };
+  }
+) {
+  const fault = await prisma.faults.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+  if (!fault) {
+    return NextResponse.json({ error: "Invalid Fault-log" }, { status: 404 });
+  }
+  await prisma.faults.delete({
+    where: {
+      id: fault.id,
+    },
+  });
+  return NextResponse.json({});
+}
