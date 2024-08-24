@@ -7,7 +7,7 @@ const EditFaultLogButton = ({ faultId }: { faultId: number }) => {
   return (
     <Button>
       <Pencil2Icon />
-      <Link href={`/faults-log/${faultId}/edit`}>Edit Fault-Log</Link>
+      <Link href={`/faults-log/edit/${faultId}`}>Edit Fault-Log</Link>
     </Button>
   );
 };

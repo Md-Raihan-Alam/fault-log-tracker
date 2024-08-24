@@ -32,7 +32,7 @@ const FaultForm = ({ fault }: { fault?: Faults }) => {
       setSubmitting(true);
       if (fault) await axios.patch("/api/faults/" + fault.id, data);
       else await axios.post("/api/faults", data);
-      router.push("/faults-log");
+      router.push("/faults-log/list");
       router.refresh();
     } catch (error) {
       setSubmitting(false);
