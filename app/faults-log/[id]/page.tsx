@@ -5,6 +5,9 @@ import React from "react";
 import EditFaultLogButton from "./EditFaultLogButton";
 import FaultDetails from "./FaultDetails";
 import DeleteFaultButton from "./DeleteFaultButton";
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/authOptions";
+import AssignSelect from "./AssignSelect";
 
 interface Props {
   params: { id: string };
@@ -12,6 +15,7 @@ interface Props {
 
 const FaultDetailPage = async ({ params }: Props) => {
   //   if (typeof params.id !== "number") notFound(); - fix it
+  const session = await getServerSession(authOptions);
   const fault = await prisma.faults.findUnique({
     where: { id: parseInt(params.id) },
   });
@@ -22,12 +26,15 @@ const FaultDetailPage = async ({ params }: Props) => {
       <Box className="md:col-span-4">
         <FaultDetails fault={fault} />
       </Box>
-      <Box>
-        <Flex direction="column" gap="4">
-          <EditFaultLogButton faultId={fault.id} />
-          <DeleteFaultButton faultId={fault.id} />
-        </Flex>
-      </Box>
+      {session && (
+        <Box>
+          <Flex direction="column" gap="4">
+            <AssignSelect fault={fault} />
+            <EditFaultLogButton faultId={fault.id} />
+            <DeleteFaultButton faultId={fault.id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   );
 };
