@@ -6,9 +6,10 @@ import prisma from "@/prisma/client";
 import FaultActions from "./FaultActions";
 import { Faults, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
+import Pagination from "@/app/componenets/Pagination";
 
 interface Props {
-  searchParams: { status: Status; orderBy: keyof Faults };
+  searchParams: { status: Status; orderBy: keyof Faults; page: string };
 }
 
 const FaultsLog = async ({ searchParams }: Props) => {
@@ -33,12 +34,20 @@ const FaultsLog = async ({ searchParams }: Props) => {
     ? { [searchParams.orderBy]: "asc" }
     : undefined;
 
+  const where = { status };
+
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
+
   const faults = await prisma.faults.findMany({
-    where: {
-      status: status,
-    },
+    where,
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
+
+  const faultCount = await prisma.faults.count({ where });
+
   return (
     <div>
       <FaultActions />
@@ -46,7 +55,10 @@ const FaultsLog = async ({ searchParams }: Props) => {
         <Table.Header>
           <Table.Row>
             {columsn.map((column) => (
-              <Table.ColumnHeaderCell key={column.value}>
+              <Table.ColumnHeaderCell
+                key={column.value}
+                className={column.className}
+              >
                 <NextLink
                   href={{
                     query: { ...searchParams, orderBy: column.value },
@@ -81,6 +93,11 @@ const FaultsLog = async ({ searchParams }: Props) => {
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        pageSize={pageSize}
+        currentPage={page}
+        itemCount={faultCount}
+      />
     </div>
   );
 };
