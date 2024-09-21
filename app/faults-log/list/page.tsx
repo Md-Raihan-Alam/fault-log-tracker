@@ -5,6 +5,7 @@ import { Faults, Status } from "@prisma/client";
 import Pagination from "@/app/componenets/Pagination";
 import FaultTable, { columnNames, FaultQuery } from "./FaultTable";
 import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: FaultQuery;
@@ -49,5 +50,11 @@ const FaultsLog = async ({ searchParams }: Props) => {
 
 export const dynamic = "force-dynamic";
 // export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: "Fault Log Tracker - Fault Log List",
+  description:
+    "Browse and manage detailed logs of project faults and system issues, with filtering and sorting options.",
+};
 
 export default FaultsLog;
