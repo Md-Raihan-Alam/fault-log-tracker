@@ -1,5 +1,5 @@
 "use client";
-import { Spinner } from "@/app/componenets";
+import { Spinner } from "@radix-ui/themes";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";

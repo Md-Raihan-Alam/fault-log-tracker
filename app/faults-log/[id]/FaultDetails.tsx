@@ -11,6 +11,9 @@ const FaultDetails = ({ fault }: { fault: Faults }) => {
       <Flex gapX="3" my="2">
         <FaultStatusBadge status={fault.status} />
         <Text>{fault.createdAt.toDateString()}</Text>
+        {fault.createdByUser && (
+          <Text>Created by: {fault.createdByUser || "Unknown User"}</Text>
+        )}
       </Flex>
       <Card className="prose max-w-full" mt="4">
         <ReactMarkdown>{fault.description}</ReactMarkdown>

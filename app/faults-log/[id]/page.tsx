@@ -8,7 +8,7 @@ import DeleteFaultButton from "./DeleteFaultButton";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import AssignSelect from "./AssignSelect";
-
+import StatusSelect from "./StatusUpdate";
 interface Props {
   params: { id: string };
 }
@@ -32,18 +32,26 @@ const FaultDetailPage = async ({ params }: Props) => {
       <Box className="md:col-span-4">
         <FaultDetails fault={fault} />
       </Box>
-      {session && (
-        <Box>
-          <Flex direction="column" gap="4">
-            <AssignSelect fault={fault} />
-            <EditFaultLogButton faultId={fault.id} />
-            <DeleteFaultButton faultId={fault.id} />
-          </Flex>
-        </Box>
-      )}
+
+      <Box>
+        <Flex direction="column" gap="4">
+          {session && fault.createdByUserId === session!.user!.id! && (
+            <>
+              <AssignSelect fault={fault} />
+              <EditFaultLogButton faultId={fault.id} />
+              <DeleteFaultButton faultId={fault.id} />
+            </>
+          )}
+          {session && fault.assignedToUserId === session!.user!.id! && (
+            <StatusSelect fault={fault} />
+          )}
+        </Flex>
+      </Box>
     </Grid>
   );
 };
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props) {
   const fault = await fetchUser(parseInt(params.id));

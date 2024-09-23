@@ -7,6 +7,7 @@ import authOptions from "@/app/auth/authOptions";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
+  console.log("Working");
   if (!session) return NextResponse.json({}, { status: 401 });
 
   const body = await request.json();
@@ -18,7 +19,10 @@ export async function POST(request: NextRequest) {
     data: {
       title: body.title,
       description: body.description,
+      createdByUser: body.name,
+      createdByUserId: body.id,
     },
   });
+
   return NextResponse.json(newFault, { status: 201 });
 }

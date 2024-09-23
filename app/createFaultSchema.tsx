@@ -7,6 +7,8 @@ export const faultSchema = z.object({
   description: z
     .string()
     .min(10, "Description is required to be at least 10 characters"),
+  id: z.string(),
+  name: z.string(),
 });
 
 export const patchFaultSchema = z.object({
@@ -26,4 +28,5 @@ export const patchFaultSchema = z.object({
     .max(255)
     .optional()
     .nullable(),
+  status: z.string().optional(),
 });

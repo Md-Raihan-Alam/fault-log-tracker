@@ -6,8 +6,10 @@ import axios from "axios";
 // import { useEffect, useState } from "react";
 import { Skeleton } from "@/app/componenets";
 import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
 const AssignSelect = ({ fault }: { fault: Faults }) => {
   const { data: users, error, isLoading } = useUsers();
+  const [loading, setLoading] = useState(false);
   // const [users, setUsers] = useState<User[]>([]);
 
   // useEffect(() => {
@@ -18,21 +20,27 @@ const AssignSelect = ({ fault }: { fault: Faults }) => {
   //   fetchUsers();
   // }, []);
 
-  if (isLoading) return <Skeleton />;
+  if (isLoading || loading) return <Skeleton />;
 
   if (error) return null;
   const assignFault = async (userId: string) => {
+    setLoading(true);
     try {
       await axios.patch("/api/faults/" + fault.id, {
         assignedToUserId: userId || "unassigned",
       });
+      setLoading(false);
+      toast.success("The user has been assigned");
+      window.location.reload();
     } catch (error: any) {
       toast.error("Changes could not be saved.");
+      setLoading(false);
     }
   };
   return (
     <>
       <Select.Root
+        disabled={loading ? true : false}
         defaultValue={fault.assignedToUserId || "unassigned"}
         onValueChange={assignFault}
       >
