@@ -21,5 +21,5 @@ const FaultDetails = ({ fault }: { fault: Faults }) => {
     </>
   );
 };
-
+export const dynamic = "force-dynamic";
 export default FaultDetails;
