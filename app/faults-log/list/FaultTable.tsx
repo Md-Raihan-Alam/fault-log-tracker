@@ -17,7 +17,6 @@ interface Props {
 }
 
 const FaultTable = ({ searchParams, faults }: Props) => {
-  console.log(faults);
   return (
     <Table.Root variant="surface">
       <Table.Header>

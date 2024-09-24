@@ -13,7 +13,7 @@ const FaultsChart = ({ NEW, ACTIVE, RESOLVED }: Props) => {
   const data = [
     { label: "New", value: NEW },
     { label: "Active", value: ACTIVE },
-    { label: "RESOLVED", value: RESOLVED },
+    { label: "Resolved", value: RESOLVED },
   ];
   return (
     <Card>

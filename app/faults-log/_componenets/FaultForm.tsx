@@ -31,7 +31,6 @@ const FaultForm = ({ fault }: { fault?: Faults }) => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit = handleSubmit(async (formData) => {
-    console.log("Submit button clicked"); // Debugging line
     try {
       formData = {
         ...formData,
@@ -40,27 +39,21 @@ const FaultForm = ({ fault }: { fault?: Faults }) => {
       };
 
       setSubmitting(true);
-      console.log("Form data:", formData); // Log the form data being submitted
 
       if (fault) {
         await axios.patch("/api/faults/" + fault.id, formData);
-        console.log("Fault updated"); // Confirm update
       } else {
         await axios.post("/api/faults", formData);
-        console.log("New fault submitted"); // Confirm new submission
       }
 
       router.push("/faults-log/list");
       router.refresh();
     } catch (error) {
       setSubmitting(false);
-      console.error("Error during submission:", error); // Log the error
+
       setError("An unexpected error occurred");
     }
   });
-
-  console.log("isSubmitting:", isSubmitting); // Log the state of isSubmitting
-  console.log("Form errors:", errors); // Log any validation errors
 
   if (status === "loading") return <FaultFormSkeleton />;
 

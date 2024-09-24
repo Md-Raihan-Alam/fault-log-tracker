@@ -21,7 +21,7 @@ export default async function Home() {
   );
 }
 export const metadata: Metadata = {
-  title: "Fault Log Tracker - Dashboard",
+  title: "Fault Log Tracker - Dashboard ",
   description:
     "Monitor and manage system faults or bugs with real-time summaries, detailed logs, and visual charts.",
 };

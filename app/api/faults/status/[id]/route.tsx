@@ -21,7 +21,6 @@ export async function PATCH(
 
   const validation = patchFaultSchema.safeParse(body);
   if (!validation.success) {
-    console.error("Validation failed:", validation.error.format());
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 

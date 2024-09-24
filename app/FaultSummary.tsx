@@ -16,17 +16,17 @@ const FaultSummary = ({ NEW, ACTIVE, RESOLVED }: Props) => {
     status: Status;
   }[] = [
     {
-      label: "Open Faults-Log",
+      label: "Opens Faults-Log",
       value: NEW,
       status: "NEW",
     },
     {
-      label: "Active Faults-Log",
+      label: "Actives Faults-Log",
       value: ACTIVE,
       status: "ACTIVE",
     },
     {
-      label: "Resolved Faults-Log",
+      label: "Resolveds Faults-Log",
       value: RESOLVED,
       status: "RESOLVED",
     },

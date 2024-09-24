@@ -7,7 +7,6 @@ import authOptions from "@/app/auth/authOptions";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
-  console.log("Working");
   if (!session) return NextResponse.json({}, { status: 401 });
 
   const body = await request.json();

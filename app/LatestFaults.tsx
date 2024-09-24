@@ -17,7 +17,7 @@ const LatestFaults = async () => {
   return (
     <Card>
       <Heading size="4" mb="5">
-        Latest Faults Log
+        Latest Faults Logs
       </Heading>
       <Table.Root>
         <Table.Body>
